@@ -1,0 +1,689 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body, .site-root {
+    font-family: 'Lato', sans-serif;
+    background: var(--color-background-tertiary);
+    color: var(--color-text-primary);
+  }
+
+  .site-root { max-width: 100%; }
+
+  /* NAV */
+  .nav {
+    background: #00704A;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 2px solid #005F40;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 14px 20px 14px 0;
+    border-right: 1px solid rgba(255,255,255,0.3);
+    margin-right: 8px;
+    white-space: nowrap;
+  }
+  .nav-btn {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.85);
+    font-family: 'Lato', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 16px 12px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    color: #fff;
+    border-bottom-color: #CBA35A;
+  }
+
+  /* SECTIONS */
+  .section { display: none; padding: 0; }
+  .section.active { display: block; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #1E3932 0%, #00704A 60%, #1E3932 100%);
+    padding: 64px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(203,163,90,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 30%, rgba(255,255,255,0.05) 0%, transparent 50%);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(203,163,90,0.2);
+    border: 1px solid rgba(203,163,90,0.5);
+    color: #CBA35A;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    color: #fff;
+    margin-bottom: 12px;
+    line-height: 1.15;
+    position: relative;
+  }
+  .hero h1 span { color: #CBA35A; }
+  .hero-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,0.75);
+    max-width: 580px;
+    margin: 0 auto 32px;
+    line-height: 1.7;
+    position: relative;
+  }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    position: relative;
+    flex-wrap: wrap;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #CBA35A;
+    display: block;
+  }
+  .hero-stat .lbl {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .hero-divider { width: 60px; height: 2px; background: #CBA35A; margin: 28px auto; opacity: 0.5; }
+
+  /* CONTENT AREA */
+  .content { padding: 40px 40px; }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--color-text-primary);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-title .dot { width: 8px; height: 8px; border-radius: 50%; background: #00704A; flex-shrink: 0; }
+  .section-lead {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    margin-bottom: 28px;
+    padding-left: 20px;
+    border-left: 2px solid #00704A;
+    line-height: 1.6;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; }
+  .card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 20px;
+  }
+  .card-accent { border-top: 3px solid #00704A; }
+  .card h3 { font-size: 13px; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .card .big { font-family: 'Playfair Display', serif; font-size: 26px; color: #00704A; font-weight: 700; }
+  .card p { font-size: 13px; color: var(--color-text-secondary); margin-top: 6px; line-height: 1.5; }
+
+  /* THEORY BOXES */
+  .theory-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 28px; }
+  .theory-box {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 20px 22px;
+  }
+  .theory-box .t-icon { font-size: 22px; margin-bottom: 10px; display: block; }
+  .theory-box h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; color: var(--color-text-primary); }
+  .theory-box p { font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; }
+  .theory-box .tag {
+    display: inline-block;
+    background: #E8F5EE;
+    color: #1E3932;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+
+  /* CHART WRAPPER */
+  .chart-wrap {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .chart-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text-secondary); margin-bottom: 16px; }
+  .chart-caption { font-size: 12px; color: var(--color-text-secondary); margin-top: 10px; font-style: italic; line-height: 1.5; }
+
+  /* BAR CHART */
+  .bar-chart { display: flex; flex-direction: column; gap: 10px; }
+  .bar-row { display: flex; align-items: center; gap: 10px; }
+  .bar-label { font-size: 12px; color: var(--color-text-secondary); min-width: 90px; text-align: right; }
+  .bar-track { flex: 1; background: var(--color-background-secondary); border-radius: 4px; height: 24px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding: 0 8px; transition: width 0.8s ease; }
+  .bar-fill span { font-size: 11px; font-weight: 700; color: #fff; white-space: nowrap; }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before { content: ''; position: absolute; left: 8px; top: 6px; bottom: 6px; width: 2px; background: #00704A; opacity: 0.3; }
+  .tl-item { position: relative; padding-bottom: 20px; }
+  .tl-dot { position: absolute; left: -20px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: #00704A; border: 2px solid var(--color-background-primary); }
+  .tl-year { font-size: 11px; font-weight: 700; color: #00704A; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 3px; }
+  .tl-text { font-size: 13px; color: var(--color-text-primary); line-height: 1.5; }
+  .tl-text strong { color: var(--color-text-primary); }
+
+  /* WORLD MAP VISUAL */
+  .market-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .market-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 14px;
+    text-align: center;
+  }
+  .market-card .flag { font-size: 24px; margin-bottom: 6px; display: block; }
+  .market-card .country { font-size: 12px; font-weight: 700; color: var(--color-text-primary); }
+  .market-card .stores { font-size: 18px; font-weight: 700; color: #00704A; font-family: 'Playfair Display', serif; }
+  .market-card .unit { font-size: 10px; color: var(--color-text-secondary); }
+
+  /* STRATEGY TABLE */
+  .strategy-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .strategy-table th { text-align: left; padding: 10px 14px; background: #1E3932; color: #fff; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .strategy-table th:first-child { border-radius: 8px 0 0 0; }
+  .strategy-table th:last-child { border-radius: 0 8px 0 0; }
+  .strategy-table td { padding: 10px 14px; border-bottom: 0.5px solid var(--color-border-tertiary); color: var(--color-text-primary); vertical-align: top; line-height: 1.5; }
+  .strategy-table tr:last-child td { border-bottom: none; }
+  .strategy-table tr:nth-child(even) td { background: var(--color-background-secondary); }
+  .badge-green { display: inline-block; background: #E8F5EE; color: #1E3932; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
+  .badge-amber { display: inline-block; background: #FFF3E0; color: #6D4C00; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
+  .badge-red { display: inline-block; background: #FFEBEE; color: #8B1A1A; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
+
+  /* CONCLUSION QUOTE */
+  .quote-box {
+    background: #1E3932;
+    border-radius: var(--border-radius-lg);
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .quote-box::before { content: '"'; font-family: 'Playfair Display', serif; font-size: 80px; color: rgba(203,163,90,0.3); position: absolute; top: 0; left: 16px; line-height: 1; }
+  .quote-box p { font-size: 15px; color: rgba(255,255,255,0.85); line-height: 1.8; position: relative; font-style: italic; }
+
+  /* PESTEL */
+  .pestel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+  .pestel-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 16px;
+  }
+  .pestel-letter { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; margin-bottom: 6px; }
+  .pestel-card h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .pestel-card p { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+
+  /* FONTI */
+  .source-list { list-style: none; }
+  .source-list li { padding: 8px 0; border-bottom: 0.5px solid var(--color-border-tertiary); font-size: 13px; color: var(--color-text-secondary); display: flex; align-items: center; gap: 8px; }
+  .source-list li:last-child { border-bottom: none; }
+  .source-dot { width: 6px; height: 6px; border-radius: 50%; background: #00704A; flex-shrink: 0; }
+
+  /* LINE CHART */
+  .line-chart-wrap { position: relative; height: 180px; margin: 8px 0; }
+
+  /* APPROFONDIMENTO */
+  .challenge-box {
+    background: var(--color-background-primary);
+    border-left: 4px solid #CBA35A;
+    border-radius: 0 var(--border-radius-lg) var(--border-radius-lg) 0;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+  }
+  .challenge-box h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .challenge-box p { font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; }
+
+  .score-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .score-row:last-child { border-bottom: none; }
+  .score-label { font-size: 13px; color: var(--color-text-secondary); }
+  .score-val { font-size: 15px; font-weight: 700; color: #00704A; }
+</style>
+
+<div class="site-root">
+  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden">Progetto Google Sites — Starbucks: Strategie di ingresso nei mercati esteri</h2>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-logo">★ Starbucks</div>
+    <button class="nav-btn active" onclick="showSection('home')">Home</button>
+    <button class="nav-btn" onclick="showSection('teoria')">Teoria</button>
+    <button class="nav-btn" onclick="showSection('contesto')">Contesto</button>
+    <button class="nav-btn" onclick="showSection('caso')">Caso</button>
+    <button class="nav-btn" onclick="showSection('approfondimento')">Approfondimento</button>
+    <button class="nav-btn" onclick="showSection('conclusioni')">Conclusioni</button>
+  </nav>
+
+  <!-- 1. HOME -->
+  <div class="section active" id="home">
+    <div class="hero">
+      <div class="hero-badge">Progetto di Economia Aziendale</div>
+      <h1>Strategie di ingresso<br>nei <span>mercati esteri</span></h1>
+      <div class="hero-divider"></div>
+      <p class="hero-sub">Caso aziendale: Starbucks Corporation — Come un marchio americano di caffè è diventato un fenomeno globale presente in oltre 80 paesi del mondo.</p>
+      <div class="hero-stats">
+        <div class="hero-stat"><span class="num">38.000+</span><span class="lbl">Punti vendita globali</span></div>
+        <div class="hero-stat"><span class="num">80+</span><span class="lbl">Paesi nel mondo</span></div>
+        <div class="hero-stat"><span class="num">$35,9 mld</span><span class="lbl">Ricavi 2023</span></div>
+        <div class="hero-stat"><span class="num">1971</span><span class="lbl">Anno di fondazione</span></div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="section-title"><span class="dot"></span>Obiettivi del lavoro</div>
+      <p class="section-lead">Analizzare come Starbucks ha sviluppato e applicato diverse strategie di ingresso nei mercati internazionali, adattando il proprio modello di business alle caratteristiche culturali, economiche e normative di ogni paese.</p>
+      <div class="card-grid">
+        <div class="card card-accent">
+          <h3>Argomento</h3>
+          <div class="big">7</div>
+          <p>Strategie di ingresso nei mercati esteri</p>
+        </div>
+        <div class="card card-accent">
+          <h3>Caso aziendale</h3>
+          <div class="big" style="font-size:18px; padding-top:4px;">Starbucks Corp.</div>
+          <p>Multinazionale americana del settore food & beverage</p>
+        </div>
+        <div class="card card-accent">
+          <h3>Domanda chiave</h3>
+          <div class="big" style="font-size:14px; padding-top:4px; color:var(--color-text-primary);">Come si entra in un nuovo mercato?</div>
+          <p>Quali strategie adotta Starbucks paese per paese?</p>
+        </div>
+        <div class="card card-accent">
+          <h3>Metodo</h3>
+          <div class="big" style="font-size:14px; padding-top:4px; color:var(--color-text-primary);">Analisi teorica + caso reale</div>
+          <p>Dati, grafici e analisi critica comparata</p>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-title">Crescita punti vendita globali Starbucks (2000–2023)</div>
+        <canvas id="lineChart" height="160"></canvas>
+        <div class="chart-caption">Fonte: Starbucks Annual Reports. La crescita accelera dal 2012 grazie alle strategie di franchising e joint venture in Asia.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. TEORIA -->
+  <div class="section" id="teoria">
+    <div class="content" style="padding-top:36px">
+      <div class="section-title"><span class="dot"></span>Concetti chiave: strategie di internazionalizzazione</div>
+      <p class="section-lead">Le imprese che intendono espandersi all'estero devono scegliere la modalità di ingresso più adatta in base al livello di rischio, controllo desiderato e risorse disponibili.</p>
+
+      <div class="theory-grid">
+        <div class="theory-box">
+          <span class="tag">Export diretto</span>
+          <span class="t-icon">📦</span>
+          <h3>Esportazione</h3>
+          <p>L'impresa produce nel paese d'origine e vende all'estero. Basso rischio ma scarso controllo sul mercato locale. Adatta per i primi approcci.</p>
+        </div>
+        <div class="theory-box">
+          <span class="tag">Accordo contrattuale</span>
+          <span class="t-icon">📝</span>
+          <h3>Licensing & Franchising</h3>
+          <p>Si concede a un partner locale il diritto di usare il marchio/know-how dietro pagamento di royalty. Starbucks usa il <strong>licensing</strong> in molti mercati del Medio Oriente.</p>
+        </div>
+        <div class="theory-box">
+          <span class="tag">Partnership</span>
+          <span class="t-icon">🤝</span>
+          <h3>Joint Venture</h3>
+          <p>Accordo tra l'impresa internazionale e un partner locale per creare una nuova entità. Ripartizione di rischi e benefici. Usata da Starbucks in Giappone e Cina.</p>
+        </div>
+        <div class="theory-box">
+          <span class="tag">Investimento diretto</span>
+          <span class="t-icon">🏢</span>
+          <h3>Filiale diretta (FDI)</h3>
+          <p>Apertura di punti vendita di proprietà (company-operated). Massimo controllo su qualità e brand. Usata da Starbucks negli USA, Canada, UK e nei mercati chiave.</p>
+        </div>
+        <div class="theory-box">
+          <span class="tag">Acquisizione</span>
+          <span class="t-icon">🔄</span>
+          <h3>Acquisizione di imprese</h3>
+          <p>Acquisto di aziende già presenti nel mercato target. Permette un ingresso rapido. Starbucks ha acquisito la quota di minoranza del partner giapponese nel 2014.</p>
+        </div>
+        <div class="theory-box">
+          <span class="tag">Modello teorico</span>
+          <span class="t-icon">📊</span>
+          <h3>Modello OLI (Dunning)</h3>
+          <p>Proprietà (Ownership), Localizzazione (Location), Internalizzazione (Internalization). Spiega perché e come le multinazionali scelgono di investire all'estero.</p>
+        </div>
+      </div>
+
+      <div class="chart-wrap">
+        <div class="chart-title">Matrice Rischio / Controllo per modalità di ingresso</div>
+        <canvas id="matrixChart" height="200"></canvas>
+        <div class="chart-caption">Fonte: Elaborazione su Czinkota & Ronkainen, "International Marketing". All'aumentare del controllo desiderato, aumenta proporzionalmente il rischio assunto dall'impresa.</div>
+      </div>
+
+      <div class="card-grid" style="margin-top:20px">
+        <div class="card">
+          <h3>Standardizzazione</h3>
+          <p>Strategia "think global": prodotto e comunicazione uniformi in tutto il mondo. Riduce i costi ma ignora le differenze culturali.</p>
+        </div>
+        <div class="card">
+          <h3>Adattamento</h3>
+          <p>Strategia "think local": adattamento al gusto e alla cultura locale. Più costosa ma più efficace nei mercati con forti identità culturali.</p>
+        </div>
+        <div class="card">
+          <h3>Glocalizzazione</h3>
+          <p>Approccio ibrido adottato da Starbucks: marchio globale uniforme ma menu, design e comunicazione adattati localmente.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. CONTESTO INTERNAZIONALE -->
+  <div class="section" id="contesto">
+    <div class="content" style="padding-top:36px">
+      <div class="section-title"><span class="dot"></span>Contesto internazionale del settore caffè</div>
+      <p class="section-lead">Il mercato globale del caffè vale oltre 100 miliardi di dollari e cresce del 5-6% annuo. Il segmento "premium" — quello di Starbucks — è il più dinamico, traino dalla classe media emergente in Asia.</p>
+
+      <div class="market-grid">
+        <div class="market-card"><span class="flag">🇺🇸</span><div class="country">USA</div><div class="stores">16.861</div><div class="unit">negozi</div></div>
+        <div class="market-card"><span class="flag">🇨🇳</span><div class="country">Cina</div><div class="stores">7.596</div><div class="unit">negozi</div></div>
+        <div class="market-card"><span class="flag">🇯🇵</span><div class="country">Giappone</div><div class="stores">1.887</div><div class="unit">negozi</div></div>
+        <div class="market-card"><span class="flag">🇰🇷</span><div class="country">Corea del Sud</div><div class="stores">1.893</div><div class="unit">negozi</div></div>
+        <div class="market-card"><span class="flag">🇬🇧</span><div class="country">Regno Unito</div><div class="stores">1.070</div><div class="unit">negozi</div></div>
+        <div class="market-card"><span class="flag">🇲🇽</span><div class="country">Messico</div><div class="stores">870</div><div class="unit">negozi</div></div>
+        <div class="market-card"><span class="flag">🇹🇷</span><div class="country">Turchia</div><div class="stores">633</div><div class="unit">negozi</div></div>
+        <div class="market-card"><span class="flag">🇮🇹</span><div class="country">Italia</div><div class="stores">~30</div><div class="unit">negozi</div></div>
+      </div>
+
+      <div class="chart-wrap">
+        <div class="chart-title">Distribuzione ricavi per area geografica 2023 (miliardi $)</div>
+        <div class="bar-chart" id="revenueChart">
+          <div class="bar-row"><span class="bar-label">Nord America</span><div class="bar-track"><div class="bar-fill" style="width:0%;background:#00704A"><span>$18,0 mld</span></div></div></div>
+          <div class="bar-row"><span class="bar-label">Cina/Asia Pac.</span><div class="bar-track"><div class="bar-fill" style="width:0%;background:#1E3932"><span>$6,6 mld</span></div></div></div>
+          <div class="bar-row"><span class="bar-label">International</span><div class="bar-track"><div class="bar-fill" style="width:0%;background:#CBA35A"><span>$6,9 mld</span></div></div></div>
+          <div class="bar-row"><span class="bar-label">Channel Dev.</span><div class="bar-track"><div class="bar-fill" style="width:0%;background:#888"><span>$2,2 mld</span></div></div></div>
+        </div>
+        <div class="chart-caption">Fonte: Starbucks Annual Report 2023. Il Nord America rimane il mercato principale, ma la Cina è la seconda area per importanza strategica.</div>
+      </div>
+
+      <div class="card-grid" style="margin-top:8px">
+        <div class="card">
+          <h3>Tasso di crescita Cina</h3>
+          <div class="big">+18%</div>
+          <p>Crescita annua prevista del mercato caffè cinese fino al 2026</p>
+        </div>
+        <div class="card">
+          <h3>Apertura media mondiale</h3>
+          <div class="big">~4/giorno</div>
+          <p>Nuovi negozi Starbucks aperti ogni giorno a livello globale (picco pre-pandemia)</p>
+        </div>
+        <div class="card">
+          <h3>Concorrenza</h3>
+          <div class="big">Luckin</div>
+          <p>Il brand cinese Luckin Coffee supera Starbucks in numero di negozi in Cina dal 2022</p>
+        </div>
+        <div class="card">
+          <h3>Mercati emergenti</h3>
+          <div class="big">India</div>
+          <p>Nuovo focus: 1.000 negozi previsti entro il 2028 tramite JV con Tata Consumer Products</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. CASO AZIENDALE -->
+  <div class="section" id="caso">
+    <div class="content" style="padding-top:36px">
+      <div class="section-title"><span class="dot"></span>Caso aziendale: Starbucks Corporation</div>
+      <p class="section-lead">Da una piccola torrefazione di Seattle a simbolo globale del caffè premium: la storia di Starbucks è un caso di studio esemplare di espansione internazionale strategica e adattamento culturale.</p>
+
+      <div class="chart-wrap" style="margin-bottom:24px">
+        <div class="chart-title">Timeline espansione internazionale</div>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1971 — Fondazione</div><div class="tl-text">Howard Schultz apre il primo Starbucks a <strong>Seattle, Washington</strong>. Il concept si ispira ai bar milanesi: caffè di qualità e "terzo luogo" tra casa e lavoro.</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1996 — Prima espansione estera</div><div class="tl-text">Apertura a <strong>Tokyo, Giappone</strong> tramite joint venture con Sazaby Inc. Inizia il modello di partnership con operatori locali forti.</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1999 — Ingresso in Cina</div><div class="tl-text">Apertura a Pechino. La Cina diventerà il mercato in più rapida crescita. Strategia iniziale: educare i consumatori cinesi alla cultura del caffè.</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2003–2010 — Espansione Europa e ME</div><div class="tl-text">Ingresso in Francia, Germania, Russia e Medio Oriente tramite <strong>licensing</strong> ad operatori regionali come Alsea (Messico/Spagna) e Alshaya (Medio Oriente).</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2017 — Ingresso in Italia</div><div class="tl-text">Apertura del <strong>Starbucks Reserve Roastery</strong> a Milano, in Piazza Cordusio. Strategia cautela: pochi negozi premium nel mercato del caffè più esigente al mondo.</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2022–2024 — Piano Reinvenzione</div><div class="tl-text">Nuovo CEO Laxman Narasimhan lancia il piano <strong>"Reinvention"</strong>: focus su efficienza, tecnologia e fidelizzazione. Rallentamento strategico in Cina per sfida Luckin.</div></div>
+        </div>
+      </div>
+
+      <div class="chart-title" style="margin-bottom:12px; font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--color-text-secondary);">Strategie di ingresso per paese — analisi comparata</div>
+      <div class="chart-wrap" style="padding:0; overflow:hidden">
+        <table class="strategy-table">
+          <thead><tr><th>Paese</th><th>Modalità di ingresso</th><th>Partner locale</th><th>Adattamento</th><th>Risultato</th></tr></thead>
+          <tbody>
+            <tr><td><strong>🇯🇵 Giappone</strong></td><td>Joint Venture → acquisizione (2014)</td><td>Sazaby Inc.</td><td>Matcha Latte, sakura menu stagionale</td><td><span class="badge-green">Successo</span></td></tr>
+            <tr><td><strong>🇨🇳 Cina</strong></td><td>JV tripartita → FDI (2017)</td><td>Uni-President, Beijing Mei Da</td><td>Moon cake, prodotti tè, store culturali</td><td><span class="badge-amber">In sfida</span></td></tr>
+            <tr><td><strong>🇮🇳 India</strong></td><td>Joint Venture 50/50</td><td>Tata Consumer Products</td><td>Masala chai, snack indiani locali</td><td><span class="badge-green">Crescita</span></td></tr>
+            <tr><td><strong>🇸🇦 Arabia S.</strong></td><td>Licensing esclusivo</td><td>Alshaya Group</td><td>Menu halal, design arabesco degli store</td><td><span class="badge-green">Successo</span></td></tr>
+            <tr><td><strong>🇮🇹 Italia</strong></td><td>Apertura diretta (FDI)</td><td>Nessuno</td><td>Prodotti Reserve, no drive-through</td><td><span class="badge-amber">Cauto</span></td></tr>
+            <tr><td><strong>🇦🇺 Australia</strong></td><td>FDI</td><td>Nessuno</td><td>Scarso adattamento alla cultura caffè locale</td><td><span class="badge-red">Parziale</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="chart-caption" style="margin-top:10px; font-size:12px; color:var(--color-text-secondary); font-style:italic;">Fonte: elaborazione su Starbucks Annual Reports e Harvard Business School case studies</div>
+    </div>
+  </div>
+
+  <!-- 5. APPROFONDIMENTO -->
+  <div class="section" id="approfondimento">
+    <div class="content" style="padding-top:36px">
+      <div class="section-title"><span class="dot"></span>Approfondimento: la sfida cinese e il futuro</div>
+      <p class="section-lead">La principale sfida attuale di Starbucks è il mercato cinese: il competitor locale Luckin Coffee ha superato Starbucks per numero di negozi, offrendo prezzi più bassi e un modello digitale-first. Come risponde Starbucks?</p>
+
+      <div class="challenge-box">
+        <h4>Il caso Luckin Coffee</h4>
+        <p>Luckin Coffee ha aperto oltre 10.000 negozi in Cina entro il 2023, puntando su app mobile, delivery e prezzi ridotti (media 2–3 €/caffè vs 6–8 € di Starbucks). Il target è la classe media giovane urbana, identico a quello di Starbucks. Il differenziale competitivo è la tecnologia e la velocità di servizio.</p>
+      </div>
+      <div class="challenge-box">
+        <h4>La risposta di Starbucks: premiumizzazione</h4>
+        <p>Starbucks ha risposto puntando sul posizionamento premium con i <strong>Reserve Roastery</strong> (negozi esperienziali da 2.000+ m²) e sull'esperienza "terzo luogo". In Cina ha aperto lo Shanghai Roastery, considerato il negozio Starbucks più grande al mondo. La strategia è differenziarsi attraverso l'esperienza, non competere sul prezzo.</p>
+      </div>
+      <div class="challenge-box">
+        <h4>Analisi PESTEL — Cina</h4>
+        <p>Un'analisi PESTEL rivela le complessità del mercato cinese: fattori politici (regolamentazione dati, tensioni USA-Cina), economici (rallentamento crescita PIL), sociali (nazionalismo dei consumi), tecnologici (app super-app come WeChat), ambientali (pressione su packaging), legali (requisiti partnership con aziende locali).</p>
+      </div>
+
+      <div class="pestel-grid" style="margin-top:20px">
+        <div class="pestel-card"><div class="pestel-letter" style="color:#00704A">P</div><h4>Politico</h4><p>Regolamento dati cinesi, rischio "decoupling" USA-Cina, preferenza per brand locali nelle politiche di acquisto pubblico.</p></div>
+        <div class="pestel-card"><div class="pestel-letter" style="color:#CBA35A">E</div><h4>Economico</h4><p>PIL cinese in rallentamento (+5% vs +10% anni '10). Classe media in crescita ma più attenta ai prezzi post-Covid.</p></div>
+        <div class="pestel-card"><div class="pestel-letter" style="color:#1E3932">S</div><h4>Sociale</h4><p>Crescente nazionalismo dei consumi ("guochao"). Preferenza per brand cinesi tra i giovani. Cultura tè ancora dominante nei 65+.</p></div>
+        <div class="pestel-card"><div class="pestel-letter" style="color:#00704A">T</div><h4>Tecnologico</h4><p>Super-app (WeChat, Alipay) integrano ordini, pagamenti e loyalty. Luckin è nativa digitale; Starbucks deve adattarsi.</p></div>
+        <div class="pestel-card"><div class="pestel-letter" style="color:#CBA35A">E</div><h4>Ambientale</h4><p>Pressione crescente su packaging monouso. Starbucks si impegna con tazze riutilizzabili e obiettivi net-zero al 2050.</p></div>
+        <div class="pestel-card"><div class="pestel-letter" style="color:#1E3932">L</div><h4>Legale</h4><p>Obbligo di partnership con aziende locali per alcuni settori. Legge sulla sicurezza dei dati 2021 impone server in Cina.</p></div>
+      </div>
+
+      <div class="chart-wrap" style="margin-top:20px">
+        <div class="chart-title">Starbucks vs Luckin: negozi in Cina (2019–2023)</div>
+        <canvas id="luckinChart" height="160"></canvas>
+        <div class="chart-caption">Fonte: dati societari Starbucks e Luckin Coffee. Dal 2022 Luckin supera Starbucks in numero assoluto di negozi in Cina, pur su un posizionamento di prezzo diverso.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. CONCLUSIONI -->
+  <div class="section" id="conclusioni">
+    <div class="content" style="padding-top:36px">
+      <div class="section-title"><span class="dot"></span>Conclusioni e valutazione critica</div>
+      <p class="section-lead">Il caso Starbucks dimostra che non esiste una "ricetta universale" per l'internazionalizzazione: ogni mercato richiede analisi approfondita, umiltà culturale e flessibilità strategica.</p>
+
+      <div class="quote-box">
+        <p>Starbucks non vende solo caffè: vende un'esperienza, un'identità, un "terzo luogo". Il successo dell'internazionalizzazione dipende dalla capacità di trasferire questa promessa adattandola alle culture locali, senza tradire l'essenza del marchio. Il caso australiano dimostra che anche i grandi marchi possono fallire se ignorano le tradizioni locali del caffè.</p>
+      </div>
+
+      <div class="card-grid">
+        <div class="card card-accent">
+          <h3>Punto di forza</h3>
+          <p style="margin-top:6px">La strategia di <strong>glocalizzazione</strong>: brand globale uniforme ma adattamento locale del menu e del design. Efficace in Giappone, Cina e Medio Oriente.</p>
+        </div>
+        <div class="card card-accent">
+          <h3>Punto di debolezza</h3>
+          <p style="margin-top:6px">Il modello premium incontra difficoltà nei mercati con forte cultura del caffè (Italia, Australia) o con competitor low-cost molto aggressivi (Cina).</p>
+        </div>
+        <div class="card card-accent">
+          <h3>Opportunità</h3>
+          <p style="margin-top:6px">India e Africa sub-sahariana sono i prossimi mercati in crescita. Classe media in espansione e assenza di forti competitor locali.</p>
+        </div>
+        <div class="card card-accent">
+          <h3>Minaccia</h3>
+          <p style="margin-top:6px">Nationalismo dei consumi in Cina, inflazione che riduce la spesa discrezionale nei paesi occidentali, concorrenza del caffè specialty indipendente.</p>
+        </div>
+      </div>
+
+      <div class="chart-wrap" style="margin-top:8px">
+        <div class="chart-title">Valutazione critica per dimensione</div>
+        <div id="scoreRows">
+          <div class="score-row"><span class="score-label">Adattamento culturale (glocalizzazione)</span><div style="flex:1; margin:0 16px; background:var(--color-background-secondary); border-radius:4px; height:8px; overflow:hidden"><div style="width:88%; background:#00704A; height:100%; border-radius:4px"></div></div><span class="score-val">8.8/10</span></div>
+          <div class="score-row"><span class="score-label">Gestione dei rischi di mercato</span><div style="flex:1; margin:0 16px; background:var(--color-background-secondary); border-radius:4px; height:8px; overflow:hidden"><div style="width:70%; background:#00704A; height:100%; border-radius:4px"></div></div><span class="score-val">7.0/10</span></div>
+          <div class="score-row"><span class="score-label">Innovazione del modello di business</span><div style="flex:1; margin:0 16px; background:var(--color-background-secondary); border-radius:4px; height:8px; overflow:hidden"><div style="width:75%; background:#CBA35A; height:100%; border-radius:4px"></div></div><span class="score-val">7.5/10</span></div>
+          <div class="score-row"><span class="score-label">Sostenibilità della crescita</span><div style="flex:1; margin:0 16px; background:var(--color-background-secondary); border-radius:4px; height:8px; overflow:hidden"><div style="width:65%; background:#CBA35A; height:100%; border-radius:4px"></div></div><span class="score-val">6.5/10</span></div>
+          <div class="score-row"><span class="score-label">Risposta alla concorrenza (Luckin)</span><div style="flex:1; margin:0 16px; background:var(--color-background-secondary); border-radius:4px; height:8px; overflow:hidden"><div style="width:60%; background:#888"; height:100%; border-radius:4px"></div></div><span class="score-val">6.0/10</span></div>
+        </div>
+      </div>
+
+      <div class="chart-wrap">
+        <div class="chart-title">Fonti bibliografiche e sitografiche</div>
+        <ul class="source-list">
+          <li><span class="source-dot"></span>Starbucks Corporation — Annual Report 2023. investor.starbucks.com</li>
+          <li><span class="source-dot"></span>Harvard Business School — "Starbucks: Delivering Customer Service" (caso didattico)</li>
+          <li><span class="source-dot"></span>Dunning, J.H. (2001) — "The Eclectic (OLI) Paradigm of International Production"</li>
+          <li><span class="source-dot"></span>Statista.com — Dati settore caffè globale e presenza Starbucks per paese (2024)</li>
+          <li><span class="source-dot"></span>Bloomberg — "Luckin Coffee Passes Starbucks in China Store Count" (2022)</li>
+          <li><span class="source-dot"></span>Il Sole 24 Ore — "Starbucks Milano: il difficile ingresso nel mercato italiano" (2018)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  if (id === 'contesto') animateBars();
+  if (id === 'home') drawLineChart();
+  if (id === 'approfondimento') drawLuckinChart();
+}
+
+const isDark = () => document.documentElement.getAttribute('data-theme') === 'dark'
+  || window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+const gridColor = () => isDark() ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
+const textColor = () => isDark() ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.5)';
+
+function drawLineChart() {
+  const ctx = document.getElementById('lineChart');
+  if (!ctx || ctx.dataset.drawn) return;
+  ctx.dataset.drawn = '1';
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['2000','2002','2004','2006','2008','2010','2012','2014','2016','2018','2020','2022','2023'],
+      datasets: [{
+        label: 'Negozi totali',
+        data: [3501,5886,8569,12440,16680,16858,18066,21366,25085,29324,32938,35711,38038],
+        borderColor: '#00704A',
+        backgroundColor: 'rgba(0,112,74,0.08)',
+        borderWidth: 2.5,
+        pointBackgroundColor: '#00704A',
+        pointRadius: 3,
+        tension: 0.35,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => ' ' + c.parsed.y.toLocaleString() + ' negozi' } }
+      },
+      scales: {
+        x: { grid: { color: gridColor() }, ticks: { color: textColor(), font: { size: 11 } } },
+        y: { grid: { color: gridColor() }, ticks: { color: textColor(), font: { size: 11 }, callback: v => (v/1000).toFixed(0) + 'k' } }
+      }
+    }
+  });
+}
+
+function drawLuckinChart() {
+  const ctx = document.getElementById('luckinChart');
+  if (!ctx || ctx.dataset.drawn) return;
+  ctx.dataset.drawn = '1';
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['2019','2020','2021','2022','2023'],
+      datasets: [
+        { label: 'Starbucks Cina', data: [4292,4863,5557,6019,7596], backgroundColor: '#00704A', borderRadius: 4 },
+        { label: 'Luckin Coffee', data: [2370,4507,6024,8214,10829], backgroundColor: '#CBA35A', borderRadius: 4 }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { labels: { color: textColor(), font: { size: 12 }, boxWidth: 12 } },
+        tooltip: { callbacks: { label: c => ' ' + c.dataset.label + ': ' + c.parsed.y.toLocaleString() + ' negozi' } }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: textColor() } },
+        y: { grid: { color: gridColor() }, ticks: { color: textColor(), callback: v => v.toLocaleString() } }
+      }
+    }
+  });
+}
+
+function animateBars() {
+  const targets = [100, 36.7, 38.3, 12.2];
+  const fills = document.querySelectorAll('#revenueChart .bar-fill');
+  fills.forEach((f, i) => {
+    setTimeout(() => { f.style.width = targets[i] + '%'; }, i * 120);
+  });
+}
+
+setTimeout(drawLineChart, 400);
+</script>
